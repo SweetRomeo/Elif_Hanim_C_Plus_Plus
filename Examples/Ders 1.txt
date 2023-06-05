@@ -1,0 +1,154 @@
+#include <iostream>
+#include <vector>
+#include <map>
+
+
+template<typename Iter>
+void print(Iter beg,Iter end)
+{
+    while(beg != end){
+        std::cout << *beg++ << " ";
+    }
+    std::cout << "\n";
+}
+
+int main() {
+    std::vector<int> ivec{1,4,7,89};
+    auto iter = ivec.begin();
+    print(ivec.begin(),ivec.end());
+    std::sort(ivec.begin(),ivec.end());
+    int a = 10;
+    int b = 34;
+    int c = a++ +b;// ++a + b
+    std::cout << "a : "<< a << '\n';
+    std::cout << "b : "<< b << '\n';
+    std::cout << "c : " << c << '\n';
+    return 0;
+}
+
+//---------------------------------------------
+
+#include <iostream>
+#include <vector>
+#include <map>
+
+int main()
+{
+    std::map<std::string,int> Persons{{"Mustafa",12345}};
+    Persons.insert(std::make_pair("Elif",45));
+    Persons.erase("Mustafa");
+    for(auto [name,Id]: Persons){
+        std::cout << "name : " << name << " ID : " << Id << '\n';
+    }
+    return 0;
+}
+
+//--------------------------------------------------
+C++'ta Nesne Ömürleri
+1-)otomatik ömürlü nesneler(automatic lifetime objects):yerel değişkenler(local variables)
+2-)statik ömürlü nesneler(static lifetime objects):Bu nesneler statik yerel, statik global
+veya normal global olabilir.
+3-)dinamik ömürlü nesneler(dynamic lifetime objects): new operatörü veya malloc calloc realloc
+gibi fonksiyonlarla üretilen nesneler dinamik ömürlüdür.
+4-)thread local objects: bu nesneler her thread için bir tanedir.
+
+
+
+#include <iostream>
+#include <vector>
+#include <map>
+
+static int b = 10;
+int c = 10;
+
+void func(int z)
+{
+    static int x = 10;
+    int y = 10;
+    y++;
+    x++;
+    z++;
+    std::cout << "x : " << x << '\n';
+    std::cout << "y : " << y << '\n';
+    std::cout << "z : " << z << '\n';
+}
+
+int main()
+{
+    std::vector<int> ivec;
+    ivec.push_back(12);
+    ivec.push_back(45);
+    ivec.push_back(56);
+    func(10);
+    func(10);
+    func(10);
+    return 0;
+}
+
+//--------------------------------------------
+#include <iostream>
+#include <vector>
+#include <thread>
+
+void f1()
+{
+    for(int i = 0;i < 100;++i)
+        std::cout << "*";
+}
+void f2()
+{
+    for(int i = 0;i < 100;++i)
+        std::cout << "?";
+}
+void f3()
+{
+    for(int i = 0;i < 100;++i)
+        std::cout << "&";
+}
+
+int main()
+{
+    std::thread t1{f1};
+    std::thread t2{f2};
+    std::thread t3{f3};
+    std::cout << t1.joinable() << '\n';
+    std::cout << t2.joinable() << '\n';
+    t1.join(); //thread done
+    t2.join(); //thread done
+    t3.join(); //thread done
+    std::cout << t1.joinable() << '\n';
+    std::cout << t2.joinable() << '\n';
+    return 0;
+}
+
+//-----------------------------------------
+#include <iostream>
+
+void swap(int& r1,int& r2)
+{
+    int temp = r1;
+    r1 = r2;
+    r2 = temp;
+}
+
+void swap(int* p1,int* p2)
+{
+    int temp = *p1;
+    *p1 = *p2;
+    *p2 = temp;
+}
+
+int main()
+{
+    int a = 10;
+    int b = 34;
+    int x = 56;
+    int y = 97;
+    std::cout << "a : " << a << " b : " << b << '\n';
+    std::cout << "x : " << x << " y : " << y << '\n';
+    swap(a,b);
+    swap(&x,&y);
+    std::cout << "a : " << a << " b : " << b << '\n';
+    std::cout << "x : " << x << " y : " << y << '\n';
+    return 0;
+}
