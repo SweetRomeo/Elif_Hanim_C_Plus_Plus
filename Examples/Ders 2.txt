@@ -1,0 +1,114 @@
+/*----------------------------------------
+ Pointer vs Reference:
+ int*ptr = &x;
+ int& r = x;
+ 1-)referans hayata hangi değişkene bağlanarak
+ geldiyse öyle hayatına devam pointerlar gibi
+ başka bir değişkene bağlanamazlar.
+ 2-)referanslar bildirildiği ilk değer almak
+ zorundadır. Aksi durumda error oluşur.
+ (error: 'r' declared as reference but not initialized)
+ 3-)Pointer to pointer var ama referans to referans yok!
+ 4-)C++'ta iki tip referans vardır. Bunlar:
+ a-)l-value reference(sol taraf referansı)
+ b-)r-value reference(sağ taraf referansı)
+-----------------------------------------*/
+#include <iostream>
+#include <string>
+
+void swap(int& r1,int& r2)
+{
+    int temp = r1;
+    r1 = r2;
+    r2 = temp;
+}
+
+int main() {
+
+    int x = 10;
+    int y = 34;
+    std::cout << "x : " << x << '\n';
+    std::cout << "y : " << y << '\n';
+    swap(x,y);
+    std::cout << "x : " << x << '\n';
+    std::cout << "y : " << y << '\n';
+    int& r = x;
+    r = y;
+    int* ptr = &x;
+    ptr = &y;
+    return 0;
+}
+
+/*----------------------------------------
+auto type deduction(auto tür belirleyicisi)
+Aşağıdaki örnekleri inceleyiniz.
+-----------------------------------------*/
+#include <iostream>
+#include <string>
+
+void foo(int);
+
+
+int main()
+{
+    auto x = 10;
+    auto y = 20.5;
+    auto fptr = foo;
+    return 0;
+}
+
+/*----------------------------------------
+const int türünden bir değişkenin auto
+ anahtar sözcüğüyle bildirilen bir değişkene
+ atanması sırasında constluk düşer.
+-----------------------------------------*/
+
+int main()
+{
+    const int x = 25;
+    auto p = x;
+    return 0;
+}
+
+/*----------------------------------------
+int& türünden bir değişkenin auto
+ anahtar sözcüğüyle bildirilen bir değişkene
+ atanması sırasında referanslık düşer.
+-----------------------------------------*/
+
+int main()
+{
+    int x = 25;
+    int& r = x;
+    auto p = r;
+    return 0;
+}
+
+/*----------------------------------------
+int& türünden const bir değişkenin auto
+ anahtar sözcüğüyle bildirilen bir değişkene
+ atanması sırasında hem referanslık hem
+ de constluk düşer.
+-----------------------------------------*/
+
+int main()
+{
+    const int x = 25;
+    const int& r = x;
+    auto p = r;
+    return 0;
+}
+
+/*----------------------------------------
+Eğer değişken auto değil de auto& ile
+ bildirildiyse bu durumda constluk da referanslık
+ da düşmez.
+-----------------------------------------*/
+
+int main()
+{
+    const int x = 34;
+    const int& r = x;
+    auto& y = r;
+    return 0;
+}
