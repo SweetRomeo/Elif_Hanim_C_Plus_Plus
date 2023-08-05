@@ -1,0 +1,264 @@
+Function Overloading
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte foo ve func fonksiyonlarının 3 adet
+ referans semantiği ile ilgili overloadları ilerde
+ ele alıcaz.
+-------------------------------------------------------*/
+
+#include <string>
+#include <iostream>
+
+void foo(int x);
+void foo(int& x);
+void foo(int&& x);
+
+void func(int y)
+{
+    std::cout << "func(int)" << '\n';
+}
+void func(int* y)
+{
+    std::cout << "func(int*)" << '\n';
+}
+void func(int** y)
+{
+    std::cout << "func(int**)" << '\n';
+}
+
+int main()
+{
+    func(10);
+    int x = 34;
+    int * ptr = &x;
+    func(&x);
+    func(&ptr);
+}
+
+/*--------------------------------------------------------
+fonksiyonu varsayılan argüman alması imzasının farklılaşmasına
+engel değildir. Bu yüzden aşağıdaki örnek function overloading'tir.
+-------------------------------------------------------*/
+void func(int x,int y=5);
+void func(int x);
+
+/*--------------------------------------------------------
+Aşağıdaki örnek overloading değil redeclarationdır.
+-------------------------------------------------------*/
+void bar(int x);
+void bar(const int x);
+/*--------------------------------------------------------
+Aşağıdaki örnekte overloading söz konusudur.
+Buna const overloading de denilmektedir ve oldukça yaygın
+olarak kullanılmaktadır.
+-------------------------------------------------------*/
+void tar(int*ptr);
+void tar(const int*ptr);
+
+/*--------------------------------------------------------
+Sondaki iki fonksiyon birbirinin redeclaration'ınıdır.
+Bu sebepten burda yalnızca iki tane overloading söz konusudur.
+-------------------------------------------------------*/
+void zar(const int* ptr);
+void zar(int* const ptr);
+void zar(int* ptr);
+
+/*--------------------------------------------------------
+Anahtar Notlar
+Farklı scope'a sahip aynı isimli fonksiyonlar birbirinin
+overload'ı değildir.Bu durumda overloadingten bahsedilemez.
+
+Fonksiyonun geri dönüş değeri türü veya geri dönüş değeri
+olup olmaması fonksiyonun imzasını etkilemez.
+
+redeclaration ile overloading karıştırılmamalıdır. Bunu
+anlamanın en kolay yolu iki fonksiyona da gövde yazıp
+programı derlemeye çalışarak yapılır. Eğer derleyici syntax
+hatası veriyorsa bu bir redeclarationdır. aksi halde
+burda overloading vardır.Aşağıdaki örnekte bir overloading
+söz konusu değildir çünkü bu durumda derleyici syntax hatası
+vermektedir.
+
+Function overloading'in programın çalışma zamanına herhangi
+bir maliyeti yoktur. Overload resolution'a göre aday metotlara
+bakılıp uygun fonksiyon çağrılır. Eğer fonksiyonların ikisi
+de
+-------------------------------------------------------*/
+
+/*--------------------------------------------------------
+Aşağıdaki örnekteki kodda ambiguity kaynaklı bir syntax hatası vardır.
+Bunun sebebi 2.5 sabitinin double türden olması ve long double
+ve char türlerine standart conversion olmasıdır. Bu durumda
+aday metotlar yarışta eşit olduğundan bir seçim yapılamaz ve
+ambiguity oluşur.
+-------------------------------------------------------*/
+void foo(long double);
+void foo(char);
+
+int main()
+{
+    foo(2.5);
+}
+
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte 1 nolu func çağrısı int parametreli
+func için exact match olduğu için o çağrılır.
+2 Nolu çağrıda ise promotion söz konusudur. float türü
+double türüne yükseltilir bu durumda double parametreli fonksiyon
+çağrılır. 3 Nolu func çağrısı ise ambiguity ile sonuçlanır
+çünkü bu durumda bütün fonksiyonlar standart conversion
+olduğundan fonksiyonlardan herhangi biri diğerine üstünlük sağlayamaz.
+-------------------------------------------------------*/
+void func(int);
+void func(double);
+void func(char);
+
+int main(){
+    func(12);//1
+    func(3.4f);//2
+    func(12u);//3
+}
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte ise 10 > 5 ifadesinin türü bool olduğu için
+tabi ki exact match olarak bool parametreli fonksiyon çağrılır.
+-------------------------------------------------------*/
+void func(bool);
+void func(int);
+void func(double);
+
+int main(){
+    func(10 > 5);
+}
+/*-----------------------------------------------
+Aşağıdaki örnekte int parametreli func fonksiyonu
+promotion olucağından int parametreli func çağrılır.
+Ambiguity söz konusu değildir.
+----------------------------------------------------*/
+void func(int);
+void func(double);
+
+int main(){
+    func(10 > 5);
+}
+
+/*--------------------------------------------------------
+Ancak Aşağıdaki örnekte durum ambiguity ile sonuçlanır.
+Bu durumda iki durum da exact match olarak değerlendirilmektedir.
+--------------------------------------------------------*/
+#include <iostream>
+
+void foo(int){
+    std::cout<<"1"<<'\n';
+
+}
+void foo(int &){
+    std::cout<<"2"<<'\n';
+
+}
+
+int main(){
+    int x =10;
+    foo(x);
+
+}
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte de bir ambiguity söz konusudur çünkü
+const int& de int de burda exact match olarak kabul edilir.
+-------------------------------------------------------*/
+#include <iostream>
+
+void foo(int){
+    std::cout<<"1"<<'\n';
+
+}
+void foo(const int &){
+    std::cout<<"2"<<'\n';
+}
+
+int main()
+{
+    foo(12);
+}
+
+/*--------------------------------------------------------
+1 nolu foo çağrısında int& türü diğerlerine üstünlük sağladığı
+için overload resolutionda o seçilir.
+2 nolu foo çağrısı ise const int türden bir değişkenle
+çağrıldığı için const int& parametreli fonksiyon çağrılır.
+3 nolu foo çağrısında ise sabit ifadesinin sağ taraf referansıyla
+çağrılması diğerlerinden üstün olduğundan int && parametreli
+fonksiyon çağrılır.
+--------------------------------------------------------*/
+#include <iostream>
+
+void foo(int&){
+    std::cout<<"1"<<'\n';
+
+}
+void foo(const int &){
+    std::cout<<"2"<<'\n';
+
+}
+void foo(int &&){
+    std::cout<<"3"<<'\n';
+}
+
+int main(){
+    int x = 10;
+    const int y= 56;
+    foo(x);//1
+    foo(y);//2
+    foo(12);//3
+}
+
+//---------------------------------------
+
+#include <iostream>
+#include <string>
+
+enum Color{
+    Red = 2,Yellow,Blue,Purple
+};
+
+enum cardType{
+    ONE,
+    TWO,
+    THREE,
+    FOUR,
+
+
+    JACK,
+    QUEEN,
+    KING,
+    ACE
+};
+
+struct Person
+{
+    std::string name;
+    std::string surname;
+    int ID;
+    union gender{
+        std::string maidenName;
+        int militaryID;
+    };
+};
+
+void setName(Person& p)
+{
+    std::cin >> p.surname;
+
+}
+
+int main(){
+
+    Person p = {"Berke","Sertel",1281991};
+
+    Person* ptr = &p;
+
+    ptr->ID = 121129129;//(*ptr).ID = 121129129
+    (*ptr).ID = 181901;
+}
