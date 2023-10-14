@@ -1,0 +1,2161 @@
+#include <iostream>
+#include <vector>
+#include <map>
+
+
+template<typename Iter>
+void print(Iter beg,Iter end)
+{
+    while(beg != end){
+        std::cout << *beg++ << " ";
+    }
+    std::cout << "\n";
+}
+
+int main() {
+    std::vector<int> ivec{1,4,7,89};
+    auto iter = ivec.begin();
+    print(ivec.begin(),ivec.end());
+    std::sort(ivec.begin(),ivec.end());
+    int a = 10;
+    int b = 34;
+    int c = a++ +b;// ++a + b
+    std::cout << "a : "<< a << '\n';
+    std::cout << "b : "<< b << '\n';
+    std::cout << "c : " << c << '\n';
+    return 0;
+}
+
+//---------------------------------------------
+
+#include <iostream>
+#include <vector>
+#include <map>
+
+int main()
+{
+    std::map<std::string,int> Persons{{"Mustafa",12345}};
+    Persons.insert(std::make_pair("Elif",45));
+    Persons.erase("Mustafa");
+    for(auto [name,Id]: Persons){
+        std::cout << "name : " << name << " ID : " << Id << '\n';
+    }
+    return 0;
+}
+
+//--------------------------------------------------
+C++'ta Nesne Ömürleri
+1-)otomatik ömürlü nesneler(automatic lifetime objects):yerel değişkenler(local variables)
+2-)statik ömürlü nesneler(static lifetime objects):Bu nesneler statik yerel, statik global
+veya normal global olabilir.
+3-)dinamik ömürlü nesneler(dynamic lifetime objects): new operatörü veya malloc calloc realloc
+gibi fonksiyonlarla üretilen nesneler dinamik ömürlüdür.
+4-)thread local objects: bu nesneler her thread için bir tanedir.
+
+
+
+#include <iostream>
+#include <vector>
+#include <map>
+
+static int b = 10;
+int c = 10;
+
+void func(int z)
+{
+    static int x = 10;
+    int y = 10;
+    y++;
+    x++;
+    z++;
+    std::cout << "x : " << x << '\n';
+    std::cout << "y : " << y << '\n';
+    std::cout << "z : " << z << '\n';
+}
+
+int main()
+{
+    std::vector<int> ivec;
+    ivec.push_back(12);
+    ivec.push_back(45);
+    ivec.push_back(56);
+    func(10);
+    func(10);
+    func(10);
+    return 0;
+}
+
+//--------------------------------------------
+#include <iostream>
+#include <vector>
+#include <thread>
+
+void f1()
+{
+    for(int i = 0;i < 100;++i)
+        std::cout << "*";
+}
+void f2()
+{
+    for(int i = 0;i < 100;++i)
+        std::cout << "?";
+}
+void f3()
+{
+    for(int i = 0;i < 100;++i)
+        std::cout << "&";
+}
+
+int main()
+{
+    std::thread t1{f1};
+    std::thread t2{f2};
+    std::thread t3{f3};
+    std::cout << t1.joinable() << '\n';
+    std::cout << t2.joinable() << '\n';
+    t1.join(); //thread done
+    t2.join(); //thread done
+    t3.join(); //thread done
+    std::cout << t1.joinable() << '\n';
+    std::cout << t2.joinable() << '\n';
+    return 0;
+}
+
+//-----------------------------------------
+#include <iostream>
+
+void swap(int& r1,int& r2)
+{
+    int temp = r1;
+    r1 = r2;
+    r2 = temp;
+}
+
+void swap(int* p1,int* p2)
+{
+    int temp = *p1;
+    *p1 = *p2;
+    *p2 = temp;
+}
+
+int main()
+{
+    int a = 10;
+    int b = 34;
+    int x = 56;
+    int y = 97;
+    std::cout << "a : " << a << " b : " << b << '\n';
+    std::cout << "x : " << x << " y : " << y << '\n';
+    swap(a,b);
+    swap(&x,&y);
+    std::cout << "a : " << a << " b : " << b << '\n';
+    std::cout << "x : " << x << " y : " << y << '\n';
+    return 0;
+}
+
+#include <iostream>
+#include <vector>
+#include <map>
+
+template<typename Iter>
+void print(Iter beg,Iter end)
+{
+    while(beg != end){
+        std::cout << *beg++ << " ";
+    }
+    std::cout << "\n";
+}
+
+int main() {
+    std::vector<int> ivec{1,4,7,89};
+    auto iter = ivec.begin();
+    print(ivec.begin(),ivec.end());
+    std::sort(ivec.begin(),ivec.end());
+    int a = 10;
+    int b = 34;
+    int c = a++ +b;// ++a + b
+    std::cout << "a : "<< a << '\n';
+    std::cout << "b : "<< b << '\n';
+    std::cout << "c : " << c << '\n';
+    return 0;
+}
+
+//---------------------------------------------
+
+#include <iostream>
+#include <vector>
+#include <map>
+
+int main()
+{
+    std::map<std::string,int> Persons{{"Mustafa",12345}};
+    Persons.insert(std::make_pair("Elif",45));
+    Persons.erase("Mustafa");
+    for(auto [name,Id]: Persons){
+        std::cout << "name : " << name << " ID : " << Id << '\n';
+    }
+    return 0;
+}
+
+//--------------------------------------------------
+C++'ta Nesne Ömürleri
+1-)otomatik ömürlü nesneler(automatic lifetime objects):yerel değişkenler(local variables)
+2-)statik ömürlü nesneler(static lifetime objects):Bu nesneler statik yerel, statik global
+veya normal global olabilir.
+3-)dinamik ömürlü nesneler(dynamic lifetime objects): new operatörü veya malloc calloc realloc
+gibi fonksiyonlarla üretilen nesneler dinamik ömürlüdür.
+4-)thread local objects: bu nesneler her thread için bir tanedir.
+
+
+
+#include <iostream>
+#include <vector>
+#include <map>
+
+static int b = 10;
+int c = 10;
+
+void func(int z)
+{
+    static int x = 10;
+    int y = 10;
+    y++;
+    x++;
+    z++;
+    std::cout << "x : " << x << '\n';
+    std::cout << "y : " << y << '\n';
+    std::cout << "z : " << z << '\n';
+}
+
+int main()
+{
+    std::vector<int> ivec;
+    ivec.push_back(12);
+    ivec.push_back(45);
+    ivec.push_back(56);
+    func(10);
+    func(10);
+    func(10);
+    return 0;
+}
+
+//--------------------------------------------
+#include <iostream>
+#include <vector>
+#include <thread>
+
+void f1()
+{
+    for(int i = 0;i < 100;++i)
+        std::cout << "*";
+}
+void f2()
+{
+    for(int i = 0;i < 100;++i)
+        std::cout << "?";
+}
+void f3()
+{
+    for(int i = 0;i < 100;++i)
+        std::cout << "&";
+}
+
+int main()
+{
+    std::thread t1{f1};
+    std::thread t2{f2};
+    std::thread t3{f3};
+    std::cout << t1.joinable() << '\n';
+    std::cout << t2.joinable() << '\n';
+    t1.join(); //thread done
+    t2.join(); //thread done
+    t3.join(); //thread done
+    std::cout << t1.joinable() << '\n';
+    std::cout << t2.joinable() << '\n';
+    return 0;
+}
+
+//-----------------------------------------
+#include <iostream>
+
+void swap(int& r1,int& r2)
+{
+    int temp = r1;
+    r1 = r2;
+    r2 = temp;
+}
+
+void swap(int* p1,int* p2)
+{
+    int temp = *p1;
+    *p1 = *p2;
+    *p2 = temp;
+}
+
+int main()
+{
+    int a = 10;
+    int b = 34;
+    int x = 56;
+    int y = 97;
+    std::cout << "a : " << a << " b : " << b << '\n';
+    std::cout << "x : " << x << " y : " << y << '\n';
+    swap(a,b);
+    swap(&x,&y);
+    std::cout << "a : " << a << " b : " << b << '\n';
+    std::cout << "x : " << x << " y : " << y << '\n';
+    return 0;
+}
+/*----------------------------------------
+ Pointer vs Reference:
+ int*ptr = &x;
+ int& r = x;
+ 1-)referans hayata hangi değişkene bağlanarak
+ geldiyse öyle hayatına devam pointerlar gibi
+ başka bir değişkene bağlanamazlar.
+ 2-)referanslar bildirildiği ilk değer almak
+ zorundadır. Aksi durumda error oluşur.
+ (error: 'r' declared as reference but not initialized)
+ 3-)Pointer to pointer var ama referans to referans yok!
+ 4-)C++'ta iki tip referans vardır. Bunlar:
+ a-)l-value reference(sol taraf referansı)
+ b-)r-value reference(sağ taraf referansı)
+-----------------------------------------*/
+#include <iostream>
+#include <string>
+
+void swap(int& r1,int& r2)
+{
+    int temp = r1;
+    r1 = r2;
+    r2 = temp;
+}
+
+int main() {
+
+    int x = 10;
+    int y = 34;
+    std::cout << "x : " << x << '\n';
+    std::cout << "y : " << y << '\n';
+    swap(x,y);
+    std::cout << "x : " << x << '\n';
+    std::cout << "y : " << y << '\n';
+    int& r = x;
+    r = y;
+    int* ptr = &x;
+    ptr = &y;
+    return 0;
+}
+
+/*----------------------------------------
+auto type deduction(auto tür belirleyicisi)
+Aşağıdaki örnekleri inceleyiniz.
+-----------------------------------------*/
+#include <iostream>
+#include <string>
+
+void foo(int);
+
+
+int main()
+{
+    auto x = 10;
+    auto y = 20.5;
+    auto fptr = foo;
+    return 0;
+}
+
+/*----------------------------------------
+const int türünden bir değişkenin auto
+ anahtar sözcüğüyle bildirilen bir değişkene
+ atanması sırasında constluk düşer.
+-----------------------------------------*/
+
+int main()
+{
+    const int x = 25;
+    auto p = x;
+    return 0;
+}
+
+/*----------------------------------------
+int& türünden bir değişkenin auto
+ anahtar sözcüğüyle bildirilen bir değişkene
+ atanması sırasında referanslık düşer.
+-----------------------------------------*/
+
+int main()
+{
+    int x = 25;
+    int& r = x;
+    auto p = r;
+    return 0;
+}
+
+/*----------------------------------------
+int& türünden const bir değişkenin auto
+ anahtar sözcüğüyle bildirilen bir değişkene
+ atanması sırasında hem referanslık hem
+ de constluk düşer.
+-----------------------------------------*/
+
+int main()
+{
+    const int x = 25;
+    const int& r = x;
+    auto p = r;
+    return 0;
+}
+
+/*----------------------------------------
+Eğer değişken auto değil de auto& ile
+ bildirildiyse bu durumda constluk da referanslık
+ da düşmez.
+-----------------------------------------*/
+
+int main()
+{
+    const int x = 34;
+    const int& r = x;
+    auto& y = r;
+    return 0;
+}
+/*----------------------------------------
+eğer auto&& ile bir değişken bildirilirse
+ bu değişkene
+ a-)sabit ifadesiyle ilk değer verilirse
+ bu durumda bu değişkenin türü int&& olur
+ b-)değişken ifadesiyle ilk değer verilirse
+ bu durumda bu değişkenin türü int& olur
+ (autoya karşılık int& ancak reference collapsing
+ kuralı devreye girer ve bu değişkenin
+ türü int& olur.)
+-----------------------------------------*/
+#include <vector>
+#include <list>
+
+int main()
+{
+    int y = 10;
+    int&& r1 = 25;
+    int& r2 = y;
+    auto&& x = y;
+    return 0;
+}
+
+//-----------------------------------------
+
+#include <iostream>
+
+int main() {
+    char ch='A';
+    auto x1=ch;//x1'in türü char
+    auto x2=+ch;//x2'nin türü int
+    std::cout << x2;
+    printf("%d",x2);
+    return 0;
+}
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte x'in türü int*'dır.
+-------------------------------------------------------*/
+#include <iostream>
+
+void displayArray(const int arr[],int size)
+{
+    for(int i = 0;i < size;++i)
+    {
+        std::cout << *(arr + i) << ' ';
+    }
+    std::cout << '\n';
+}
+
+int main() {
+    int arr[]{1,2,3};
+    auto x=arr;
+}
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte str'nin türü const char*'dır.
+Array decay kuralından dolayı C++ dilinde stringlerin
+türü const char[] dir. bu atama sırasında da array decay gerçekleşir.
+Buna göre tür çıkarımı const char* olarak yapılır.
+-------------------------------------------------------*/
+int main()
+{
+    auto str="berke";
+    char* s1 = "elif";//warning!!
+}
+/*--------------------------------------------------------
+Aşağıdaki örnekte x'in türü int(*)[20]'dir. Bunun nedeni
+m'nin atanırken ilk elemanının adresi olarak ele alındığı
+için 20 elemanlı int* türünden bir pointer dizisi elde edilir.
+-------------------------------------------------------*/
+int main() {
+    int m[10][20];
+    auto x=m;
+}
+/*----------------------------------------------------
+Anahtar Notlar: Referansların ve pointerın bir diğer farkı
+ise pointerlarda pointer aritmetiği varken bunun
+referanslarda söz konusu olmamasıdır.
+---------------------------------------------------*/
+
+//-------------------------------------------------------
+/*--------------------------------------------------------
+Aşağıdaki örnekte auto'nun karşılığı çıkarım yapılan tür int[10]
+Bu durumda x değişkeni int(&x)[10] türündendir.
+-------------------------------------------------------*/
+int main(){
+    int a[10]{};
+    auto &x = a;
+    auto y = a;
+}
+/*--------------------------------------------------------
+Aşağıdaki örnekte autoya karşılık gelen ifade const char[6]
+r'nin türüyse const char& [6] yani yorum satırında gösterildiği
+gibi yazmak yerine auto kullanmak çok daha mantıklı bir
+yaklaşım olacaktır.
+Anahtar Notlar: const char [] türünden yazıların hepsinin
+sonunda '\0' karakter bulunur ancak C++ bir tür eş ismi olan
+string containerı için bu geçerli değildir.
+-------------------------------------------------------*/
+int main(){
+
+    auto& r="berke";
+    auto r1 = "berke";
+    //const char (&r) [6]="berke";
+}
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte const ile auto anahtar sözcüğü
+ birlikte kullanılmıştır. Bu durumda y'nin türü
+ const int olucaktır.
+-------------------------------------------------------*/
+int main(){
+
+    int x=34;
+    const auto y=x;
+}
+/*--------------------------------------------------------
+Aşağıdaki örnekte p1 consttur ancak *p1 const değildir
+ bu sebeple p1'in başka bir adresi syntax hatasına neden
+ olur ancak *p1 değiştirilmesi legaldir. p1 ve p2 için
+ ikisinin de const anahtar sözcüğü * deklatöründen
+ önce olduğu için *p1 ve *p2 değerleri const olmuştur.
+ bu sebeple değiştirme girişim syntax hatasına sebep olur.
+ Ancak p1 ve p2'nin başka adresleri göstermesi legaldir.
+-------------------------------------------------------*/
+int main(){
+    int x = 25;
+    int y = 56;
+    int z = 98;
+    int* const p1 = &x;
+    p1 = &y;
+    *p1 = 67;
+    const int* p2 = &y;
+    p2 = &z;
+    *p2 = 78;
+    int const* p3 = &z;
+    p3 = &x;
+}
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte y'nin int* const(high veya top level const) iken z'nin türü
+ const int*(low level const) olacaktır. Yani birinde y değiştiremezken
+ diğerinde *z değiştirelemez olacaktır.
+-------------------------------------------------------*/
+int main()
+{
+    int x=34;
+    const auto y=&x;
+    const auto*z=&x;
+}
+
+/*--------------------------------------
+ char türden bir dizinin elemanlarının değiştirilmesi
+ herhangi problemli bir duruma sebep olmaz ancak
+ char diziyi gösteren bir pointer değişken üzerinden
+ bir string literalinin değiştirilme girişimi
+ undefined behavioura sebep olur.
+ ----------------------------------------*/
+#include <stdio.h>
+
+
+int main()
+{
+    const char* s1 = "ankara";
+    char s2[] = "ankara";
+    *s1 = 'b'; //ub
+    s2[0] = 'b'; //sorun yok
+    printf("%s\n",s1);
+    printf("%s\n",s2);
+}
+/*--------------------------------------------------------
+C++ 4 farklı nesne ömrü vardır bunlar:
+ 1-)otomatik ömürlü nesneler(Automatic lifetime objects):
+ yerel değişkenler, fonksiyonların parametre değişkenleri
+ yerel sınıf nesneleri otomatik ömürlü
+ 2-)static ömürlü nesneler(static lifetime objects):
+ global değişkenler, static yerel değişkenler veya static
+ global değişkenler.
+ 3-)Dinamik ömürlü nesneler(Dynamic lifetime objects):
+ Sınıf nesneleri new operatörüyle birlikte kullanımıyla
+ bir dinamik ömürlü nesne yaratımı yapılabilir ancak
+ bu nesnelerin delete operatörüyle geri verilmesi gerekir
+ aksi durumda resource leak oluşur. malloc calloc gibi
+ standart kütüphane fonksiyonlarıyla dinamik ömürlü diziler
+ oluşturulabilir ancak bu bellek free fonksiyonuyla mutlaka
+ geri verilmesi gerekir aksi durum memory leak oluşur.
+ 4-)Thread local nesneler(Thread local objects):
+ Bu kısmı concurrency konusuna geçtiğimizde inceleyecez.
+-------------------------------------------------------*/
+#include <iostream>
+#include <cstdlib>
+
+
+class Myclass{
+public:
+    Myclass()
+    {
+        std::cout << "Myclass default constructor" << '\n';
+    }
+};
+
+int main()
+{
+    int size;
+    std::cout << "Enter size?" << '\n';
+    std::cin >> size;
+    int* arr = (int*)std::malloc(size * sizeof(int));
+    Myclass m;
+    delete m;
+    free(arr);
+}
+//--------------------------------------------------------------
+
+#include <iostream>
+
+constexpr int func(const int x,const int y){
+
+    return x*x+y*y;
+}
+
+constexpr bool isPrime(const int val)
+{
+    if(val <= 1)
+        return false;
+    if(val % 2 == 0)
+        return val == 2;
+    if(val % 3 == 0)
+        return val == 3;
+    if(val % 5 == 0)
+        return val == 5;
+    if(val % 7 == 0)
+        return val == 7;
+    if(val % 11 == 0)
+        return val == 11;
+    for(int i = 13;i * i < val;i+= 2){
+        if(val % i == 0)
+            return false;
+    }
+    return true;
+}
+
+int main(){
+    std::cout << func(10,20);
+    std::cout << std::boolalpha << isPrime(11)<<'\n';
+}
+
+/*--------------------------------------------------------
+C++'ta iki tip polimorfzim vardır.,
+ 1-)Compile-time polimorfzim(Function overloading)
+ 2-)Runtime polimorfzim(Function overriding)
+-------------------------------------------------------*/
+/*--------------------------------------------------------
+Aşağıdaki örnekte foo ve func fonksiyonlarının 3 adet
+ referans semantiği ile ilgili overloadları ilerde
+ ele alıcaz.
+-------------------------------------------------------*/
+
+#include <string>
+#include <iostream>
+
+void foo(int x);
+void foo(int& x);
+void foo(int&& x);
+
+void func(int y)
+{
+    std::cout << "func(int)" << '\n';
+}
+void func(int* y)
+{
+    std::cout << "func(int*)" << '\n';
+}
+void func(int** y)
+{
+    std::cout << "func(int**)" << '\n';
+}
+
+int main()
+{
+    func(10);
+    int x = 34;
+    int * ptr = &x;
+    func(&x);
+    func(&ptr);
+}
+
+/*--------------------------------------------------------
+fonksiyonu varsayılan argüman alması imzasının farklılaşmasına
+engel değildir. Bu yüzden aşağıdaki örnek function overloading'tir.
+-------------------------------------------------------*/
+void func(int x,int y=5);
+void func(int x);
+
+/*--------------------------------------------------------
+Aşağıdaki örnek overloading değil redeclarationdır.
+-------------------------------------------------------*/
+void bar(int x);
+void bar(const int x);
+/*--------------------------------------------------------
+Aşağıdaki örnekte overloading söz konusudur.
+Buna const overloading de denilmektedir ve oldukça yaygın
+olarak kullanılmaktadır.
+-------------------------------------------------------*/
+void tar(int*ptr);
+void tar(const int*ptr);
+
+/*--------------------------------------------------------
+Sondaki iki fonksiyon birbirinin redeclaration'ınıdır.
+Bu sebepten burda yalnızca iki tane overloading söz konusudur.
+-------------------------------------------------------*/
+void zar(const int* ptr);
+void zar(int* const ptr);
+void zar(int* ptr);
+
+/*--------------------------------------------------------
+Anahtar Notlar
+Farklı scope'a sahip aynı isimli fonksiyonlar birbirinin
+overload'ı değildir.Bu durumda overloadingten bahsedilemez.
+
+Fonksiyonun geri dönüş değeri türü veya geri dönüş değeri
+olup olmaması fonksiyonun imzasını etkilemez.
+
+redeclaration ile overloading karıştırılmamalıdır. Bunu
+anlamanın en kolay yolu iki fonksiyona da gövde yazıp
+programı derlemeye çalışarak yapılır. Eğer derleyici syntax
+hatası veriyorsa bu bir redeclarationdır. aksi halde
+burda overloading vardır.Aşağıdaki örnekte bir overloading
+söz konusu değildir çünkü bu durumda derleyici syntax hatası
+vermektedir.
+
+Function overloading'in programın çalışma zamanına herhangi
+bir maliyeti yoktur. Overload resolution'a göre aday metotlara
+bakılıp uygun fonksiyon çağrılır. Eğer fonksiyonların ikisi
+de
+-------------------------------------------------------*/
+
+/*--------------------------------------------------------
+Aşağıdaki örnekteki kodda ambiguity kaynaklı bir syntax hatası vardır.
+Bunun sebebi 2.5 sabitinin double türden olması ve long double
+ve char türlerine standart conversion olmasıdır. Bu durumda
+aday metotlar yarışta eşit olduğundan bir seçim yapılamaz ve
+ambiguity oluşur.
+-------------------------------------------------------*/
+void foo(long double);
+void foo(char);
+
+int main()
+{
+    foo(2.5);
+}
+
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte 1 nolu func çağrısı int parametreli
+func için exact match olduğu için o çağrılır.
+2 Nolu çağrıda ise promotion söz konusudur. float türü
+double türüne yükseltilir bu durumda double parametreli fonksiyon
+çağrılır. 3 Nolu func çağrısı ise ambiguity ile sonuçlanır
+çünkü bu durumda bütün fonksiyonlar standart conversion
+olduğundan fonksiyonlardan herhangi biri diğerine üstünlük sağlayamaz.
+-------------------------------------------------------*/
+void func(int);
+void func(double);
+void func(char);
+
+int main(){
+    func(12);//1
+    func(3.4f);//2
+    func(12u);//3
+}
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte ise 10 > 5 ifadesinin türü bool olduğu için
+tabi ki exact match olarak bool parametreli fonksiyon çağrılır.
+-------------------------------------------------------*/
+void func(bool);
+void func(int);
+void func(double);
+
+int main(){
+    func(10 > 5);
+}
+/*-----------------------------------------------
+Aşağıdaki örnekte int parametreli func fonksiyonu
+promotion olucağından int parametreli func çağrılır.
+Ambiguity söz konusu değildir.
+----------------------------------------------------*/
+void func(int);
+void func(double);
+
+int main(){
+    func(10 > 5);
+}
+
+/*--------------------------------------------------------
+Ancak Aşağıdaki örnekte durum ambiguity ile sonuçlanır.
+Bu durumda iki durum da exact match olarak değerlendirilmektedir.
+--------------------------------------------------------*/
+#include <iostream>
+
+void foo(int){
+    std::cout<<"1"<<'\n';
+
+}
+void foo(int &){
+    std::cout<<"2"<<'\n';
+
+}
+
+int main(){
+    int x =10;
+    foo(x);
+
+}
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte de bir ambiguity söz konusudur çünkü
+const int& de int de burda exact match olarak kabul edilir.
+-------------------------------------------------------*/
+#include <iostream>
+
+void foo(int){
+    std::cout<<"1"<<'\n';
+
+}
+void foo(const int &){
+    std::cout<<"2"<<'\n';
+}
+
+int main()
+{
+    foo(12);
+}
+
+/*--------------------------------------------------------
+1 nolu foo çağrısında int& türü diğerlerine üstünlük sağladığı
+için overload resolutionda o seçilir.
+2 nolu foo çağrısı ise const int türden bir değişkenle
+çağrıldığı için const int& parametreli fonksiyon çağrılır.
+3 nolu foo çağrısında ise sabit ifadesinin sağ taraf referansıyla
+çağrılması diğerlerinden üstün olduğundan int && parametreli
+fonksiyon çağrılır.
+--------------------------------------------------------*/
+#include <iostream>
+
+void foo(int&){
+    std::cout<<"1"<<'\n';
+
+}
+void foo(const int &){
+    std::cout<<"2"<<'\n';
+
+}
+void foo(int &&){
+    std::cout<<"3"<<'\n';
+}
+
+int main(){
+    int x = 10;
+    const int y= 56;
+    foo(x);//1
+    foo(y);//2
+    foo(12);//3
+}
+
+//---------------------------------------
+
+#include <iostream>
+#include <string>
+
+enum Color{
+    Red = 2,Yellow,Blue,Purple
+};
+
+enum cardType{
+    ONE,
+    TWO,
+    THREE,
+    FOUR,
+
+
+    JACK,
+    QUEEN,
+    KING,
+    ACE
+};
+
+struct Person
+{
+    std::string name;
+    std::string surname;
+    int ID;
+    union gender{
+        std::string maidenName;
+        int militaryID;
+    };
+};
+
+void setName(Person& p)
+{
+    std::cin >> p.surname;
+
+}
+
+int main(){
+
+    Person p = {"Berke","Sertel",1281991};
+
+    Person* ptr = &p;
+
+    ptr->ID = 121129129;//(*ptr).ID = 121129129
+    (*ptr).ID = 181901;
+}
+//-----------------------------------------------------------
+#include <iostream>
+
+class Base{
+public:
+    virtual void vfunc()
+    {
+        std::cout << "Base::vfunc()" << '\n';
+    }
+};
+
+class Der :public Base{
+private:
+    void vfunc()override
+    {
+        std::cout << "Der::vfunc()" << '\n';
+    }
+};
+
+
+void f(Base& b)
+{
+     b.vfunc();
+}
+
+int main()
+{
+    Der der;
+    f(der);
+
+    return 0;
+}
+
+
+
+//--------------------------------------
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+#define randomize() (srand(time(nullptr)))
+
+constexpr int func(int x,int y){
+    return x * x + y * y;
+}
+
+void foo()
+{
+    int y = 34;
+    static int z = 34;
+    std::cout << "z : " << z++ << '\n';
+    std::cout << "y : " << y++ << '\n';
+}
+
+struct Person{
+    int id;
+    std::string name;
+};
+
+void printArray(int* arr,size_t size)
+{
+     for(int i = 0;i < size;++i){
+         std::cout << *(arr + i) << ' ';//*(arr + i) => arr[i]
+     }
+     std::cout << '\n';
+}
+
+void setRandomArray(int* arr,size_t size)
+{
+    for(int i = 0;i < size;++i)
+    {
+        *(arr + i) = rand() % 100;
+    }
+}
+
+int main()
+{
+    randomize();
+    unsigned int size;
+    std::cout << "Enter size?" << '\n';
+    std::cin >> size;
+    int* a = (int*)malloc(sizeof(int) * size);
+    int* b = (int*) calloc(size,sizeof(int));
+    printArray(a,size);
+    printArray(b,size);
+    setRandomArray(a,size);
+    setRandomArray(b,size);
+    printArray(a,size);
+    printArray(b,size);
+    free(a);
+    free(b);
+}
+
+/*--------------------------------------------------------
+isPrime fonksiyonu ve test kodu
+-------------------------------------------------------*/
+#include <iostream>
+
+constexpr bool isPrime(const int val)
+{
+    if(val <= 1)
+        return false;
+    if(val % 2 == 0)
+        return val == 2;
+    if(val % 3 == 0)
+        return val == 3;
+    if(val % 5 == 0)
+        return val == 5;
+    if(val % 7 == 0)
+        return val == 7;
+    if(val % 11 == 0)
+        return val == 11;
+    for(int i = 13;i * i < val;i += 2){
+        if(val % i == 0)
+            return false;
+    }
+    return true;
+}
+
+int main()
+{
+    for(int i = -20;i < 1000;++i){
+        if(isPrime(i)){
+            std::cout << i << ' ';
+        }
+    }
+    std::cout << isPrime(1000003);
+}
+
+#include <iostream>
+#define randomize() srand(time(nullptr))
+
+void displayArray(int* arr,int size)
+{
+    for(int i = 0;i < size;++i)
+    {
+        std::cout << arr[i] << ' ';
+    }
+    std::cout << '\n';
+}
+
+void setRandomArray(int* arr,int size)
+{
+    for(int i = 0;i < size;++i){
+        *(arr + i) = rand() % 100;
+    }
+}
+
+int main()
+{
+    randomize();
+    int size;
+    std::cout << "Enter size?" << '\n';
+    std::cin >> size;
+    int* arr = static_cast<int*>(malloc(sizeof(int) * size));
+    displayArray(arr,size);
+    setRandomArray(arr,size);
+    displayArray(arr,size);
+    free(arr);
+}
+
+
+/*--------------------------------------------------------
+Aşağıdaki örnekte örnekte C'den gelen type casting operatörü
+ yerine C++'ın const_cast operatörü kullanılmalıdır.Ancak
+ dönüşüm gerçekleştirilse daha *ptr'nin değerinin değiştirilmesi
+ tanımsız davranışa(undefined behavior) neden olur.
+-------------------------------------------------------*/
+/*--------------------------------------------------------
+ Aşağıdaki örnekte bir tanımsız davranış söz konusudur.
+ 2 13 4 7 98 23 79
+ 2 13 4 7 98 23 79
+ 2 4 13 7 98 23 79
+ 2 4 7 13 98 23 79
+
+ 2 4 7 13 23 79 98
+-------------------------------------------------------*/
+#include <iostream>
+#include <cstdlib>
+#define randomize()  (srand(time(nullptr)))
+
+
+void setRandomArray(int* arr,int size)
+{
+    for(int i = 0;i < size;++i)
+    {
+        *(arr + i) = rand() % 100;
+    }
+}
+
+void gSwap(void* vp1,void* vp2,int size)
+{
+    char*cp1 = reinterpret_cast<char*>(vp1);
+    char*cp2 = reinterpret_cast<char*>(vp2);
+
+    while(size--)
+    {
+        char temp = *cp1;
+        *cp1 = *cp2;
+        *cp2 = temp;
+        cp1++;
+        cp2++;
+    }
+}
+
+void printArray(const int* arr,int size)
+{
+    for(int i = 0;i < size;++i)
+    {
+        std::cout << *(arr + i) << ' ';//arr[i] => *(arr + i)
+    }
+    std::cout << '\n';
+}
+
+void reverseArray(int* arr,int size)
+{
+    for(int i = 0;i < size / 2;++i)
+    {
+        gSwap(arr + i,arr + size - 1 - i,sizeof(int));
+    }
+}
+
+void bubbleSort(int* arr,int size)
+{
+    for(int i = 0;i < size - 1;i++){
+        for(int k = 0;k < size - 1 - i;++k)
+        {
+            if(arr[k] > arr[k + 1])
+            {
+                gSwap(arr + k,arr + k + 1, sizeof(int));
+            }
+        }
+    }
+}
+
+
+
+int main()
+{
+    randomize();
+    int size;
+    std::cout << "Enter size?" << '\n';
+    std::cin >> size;
+
+    int*a = reinterpret_cast<int*>(calloc(size,sizeof(int)));
+    int*b = reinterpret_cast<int*>(malloc(size * sizeof(int)));
+    setRandomArray(a,size);
+    setRandomArray(b,size);
+    printArray(a,size);
+    printArray(b,size);
+    bubbleSort(a,size);
+    bubbleSort(b,size);
+/*    reverseArray(a,size);
+    reverseArray(b,size);*/
+    printArray(a,size);
+    printArray(b,size);
+    free(a);
+    free(b);
+}
+
+#include <iostream>
+
+class Myclass{
+public:
+    int x;
+};
+
+struct Location{
+    int x;
+    int y;
+    int z;
+};
+
+int x = 34;
+
+int main()
+{
+    int x = 12;
+    ++x;
+    ::x++;
+    Myclass m;
+    m.x = 15;
+    Location location;
+    location.x = 10;
+    std::cout << "local x : " << x << '\n';
+    std::cout << "global x : " << ::x << '\n';
+    std::cout << "Myclass x : " << m.x << '\n';
+    std::cout << "Location x : " << location.x << '\n';
+}
+
+/*--------------------------------------------------------
+ Kullanılan bir veri elemanına uygulanan işlemler:
+ 1-)isim arama (name look-up)
+ 2-)Linkage Control(internal - external linkage)
+ 3-)Access Control(Erişim Belirleyici)
+-------------------------------------------------------*/
+#include <iostream>
+#include <string>
+
+class Student{
+public:
+    void setName(std::string name)
+    {
+        m_name = name;
+    }
+    std::string getName()
+    {
+        return m_name;
+    }
+
+private:
+    int id;
+    std::string m_name;
+};
+
+class NumberUtil{
+public:
+    static bool isPrime(const int val);
+    static bool isArmstrong(int val);
+};
+
+int main()
+{
+    Student elif;
+    Student murat;
+    elif.setName("Elif");
+    murat.setName("Murat");
+}
+
+#include <iostream>
+
+class Myclass{
+public:
+    void func(int);
+    void func(double);
+};
+
+void Myclass::func(int) {
+    std::cout << "Myclass::func(int) called" << '\n';
+}
+
+void Myclass::func(double) {
+    std::cout << "Myclass::func(double) called" << '\n';
+}
+
+
+int main()
+{
+    Myclass m;
+    m.func(true);
+    m.func(15.6F);
+}
+//------------------------------------------------------------
+#include <iostream>
+
+class Myclass{
+public:
+    void func(double);
+    void foo(double);
+};
+
+void foo(int)//1
+{
+    std::cout << "Global foo(double)" << '\n';
+}
+
+void Myclass::foo(double)//2
+{
+    std::cout << "Myclass::foo(double) " << '\n';
+}
+
+void Myclass::func(double)
+{
+    foo(10);
+}
+
+
+int main()
+{
+    Myclass m;
+    m.func(3.5);
+}
+
+//-------------------------------------------------------
+#include <iostream>
+
+class Myclass{
+public:
+    void func(double);
+};
+
+void func(int)
+{
+    std::cout << "Global func called" << '\n';
+}
+
+void Myclass::func(double) {
+    func(15);
+}
+
+int main()
+{
+    Myclass m;
+    m.func(3.5);
+}
+/*-------------------------------------------
+staticlik ve non-staticliği açıklayan bir örnek
+--------------------------------------------*/
+#include <iostream>
+#include <string>
+
+
+class Student{
+public:
+    void setName(std::string name)
+    {
+        m_name = name;
+    }
+    void setID(int ID)
+    {
+        m_ID = ID;
+    }
+
+private:
+    std::string m_name;
+    int m_ID;
+};
+
+
+
+int main()
+{
+   Student Mehmet;
+   Student Zeynep;
+   Mehmet.setName("Mehmet");
+
+}
+/*-------------------------------------------
+static fonksiyonlar scope resolution operatörüyle
+çağrılabilir. Diğer taraftan non-static fonksiyonlar
+sadece nesne yoluyla nokta operatörüyle çağrılabilir.
+Sadece üye fonksiyonların değil aynı zamanda veri
+elemanlarınında staticliği ve non-staticliği vardır.
+--------------------------------------------*/
+class Myclass{
+public:
+    void foo(int);
+    void func(int,int);
+    int m_x,m_y;
+};
+
+
+
+
+int main()
+{
+   Myclass m;
+   m.func(10,20);
+   //func(&m,10,20);
+   m.m_x = 20;
+   Myclass::m_x = 20;//error
+}
+/*----------------------------------
+sınıflar içerisinde gloabal scopeta
+ olduğu gibi redeclation yapılamaz.
+ ------------------------------------*/
+#include <iostream>
+#include <string>
+
+class Myclass{
+public:
+    void func(int);
+    void func(int);
+};
+
+void foo(int)
+void foo(int);
+
+
+int main()
+{
+
+}
+/*-------------------------------------------------
+
+------------------------------------------------*/
+#include <iostream>
+
+class Myclass{
+public:
+    void func(double);
+    static void foo(int);
+};
+
+static void func(int)
+{
+    std::cout << "Global func called" << '\n';
+}
+
+void Myclass::func(double) {
+    ::func(15);
+}
+
+
+int main()
+{
+    Myclass m;
+    m.func(3.5);
+    Myclass::foo(10);
+}
+/*-----------------------------------------------
+
+------------------------------------------------*/
+class Myclass{
+public:
+    void func(double);
+    void func(float);
+    void func(int);
+};
+
+void Myclass::func(int) {
+    func(1.23);
+}
+
+
+int main()
+{
+    Myclass m;
+    m.func(10);
+}
+/*----------------------------------------------------------
+this pointerı kullanılarak veri elemanlarına erişim structların
+veri elemanlarına erişime benzitilebilir. Eğer parametre
+değişkeninin ismiyle sınıfın veri elemanının ismi çakışmıyorsa
+bu durumda this pointerının kullanımı tavsiye edilmez.
+----------------------------------------------------------*/
+#include <iostream>
+#include <string>
+
+class Myclass{
+private:
+    int x;
+    void foo();
+public:
+    void func(int x);
+};
+
+void Myclass::func(int x)
+{
+    (*this).x = x;
+}
+
+struct Person{
+    int ID;
+    std::string name;
+    std::string surname;
+};
+
+int main()
+{
+    Person person = {811919,"Mustafa","Kesen"};
+    Person* ptr_person = &person;
+    ptr_person->ID = 1881899;//(*ptr_person).ID
+    ptr_person->name = "Mehmet";
+
+}
+/*--------------------------------------------------
+
+-------------------------------------------------*/
+#include <iostream>
+
+class Myclass{
+    int mx;
+    void foo();
+public:
+    void func(int);
+};
+
+void Myclass::func(int x) {
+    int mx{};
+    mx = x;
+    this->mx = x;
+    (*this).mx = x;
+    Myclass::mx = x;
+}
+
+int main()
+{
+
+}
+
+/*----------------------------------------------------
+C ile ilgili bir örnek
+------------------------------------------------------*/
+#include <iostream>
+
+int main()
+{
+    using namespace std;
+    int a;
+    cout << "Bir sayi giriniz?\n";
+    cin >> a;
+    if(10 == a)
+    {
+       cout << "Evet dogru\n";
+    }
+    else
+    {
+        cout << "Hayir yanlis\n";
+    }
+}
+/*----------------------------------------------------
+Aşağıdaki örnekte Myclass nesnesi static olduğundan dolayı
+destructor çağrısı main devam devam ediyordan sonra basılır.
+------------------------------------------------------*/
+
+#include <iostream>
+
+class Myclass{
+public:
+    Myclass() = default; //default declared
+    Myclass(int)
+    {
+        std::cout << "(int) ctor" << '\n';
+    }
+    ~Myclass()
+    {
+        std::cout << "Myclass destructor" << '\n';
+    }
+};
+
+
+int main()
+{
+    {
+        static Myclass m;
+    }
+    std::cout << "Main devam ediyor" << '\n';
+}
+/*----------------------------------------------------
+Aşağıdaki örneği inceleyiniz.
+------------------------------------------------------*/
+
+#include <iostream>
+
+class Myclass{
+public:
+    Myclass()
+    {
+        std::cout << "Myclass default ctor" << '\n';
+    }
+    ~Myclass()
+    {
+        std::cout << "Myclass destructor" << '\n';
+    }
+};
+
+void func()
+{
+    static int count = 0;
+    std::cout << "func'a yapilan " << ++count << " .cagri\n";
+    static Myclass m;//static olmasaydı nolurdu?
+}
+
+
+int main()
+{
+    std::cout << "Main Basladi\n";
+    func();
+    func();
+    func();
+    func();
+    std::cout << "main devam ediyor\n";
+}
+/*-------------------------------------------------------
+this pointerı sınıf nesnesi türünden pointerdır. Aşağıdaki
+örnekte görüldüğü m'nin adresiyle this pointerdan gelen
+adresler özdeştir.
+--------------------------------------------------------*/
+#include <iostream>
+
+class Myclass{
+public:
+    Myclass()
+    {
+        std::cout << "Myclass default ctor" << '\n';
+    }
+    void foo()
+    {
+        std::cout << "Myclass::foo() this :"  << this << '\n';
+    }
+    ~Myclass()
+    {
+        std::cout << "Myclass destructor" << '\n';
+    }
+};
+
+
+
+int main()
+{
+    std::cout << "Main Basladi\n";
+    {
+        Myclass m;
+        std::cout << "&m : " << &m << '\n';
+        m.foo();
+    }
+    std::cout << "main devam ediyor\n";
+}
+/*-----------------------------------------------
+Aşağıdaki örnekte referans ve pointerlar kendisi
+ctor ve dtor çağrısı yapılacak bir nesneye bağlandığından
+bunlar ctor ve dtor çağrısı yapılmaz!
+-----------------------------------------------*/
+#include <iostream>
+
+class Myclass{
+public:
+    Myclass()
+    {
+        std::cout << "Myclass default ctor" << '\n';
+    }
+
+    ~Myclass()
+    {
+        std::cout << "Myclass destructor" << '\n';
+    }
+};
+
+
+
+int main()
+{
+    Myclass m;
+    Myclass& r1 = m;
+    Myclass& r2 = r1;
+    Myclass* p = &m;
+}
+/*---------------------------------
+ Örnek Soru: 0 dan 100 kadar olan
+ sayıları ekrana basan programı
+ döngü deyimi kullanmadan yazınız.
+----------------------------------*/
+#include <iostream>
+
+class Myclass{
+public:
+    Myclass()
+    {
+        static int i = 0;
+        std::cout << i++ << " ";
+    }
+};
+
+int main()
+{
+    Myclass m_arr[100];
+}
+/*--------------------------------------
+Örnek Soru(C ile ilgili) : Ekrana noktalı
+virgül kullanmadan Hello World yazan program
+-------------------------------------*/
+
+#include <cstdio>
+
+int main()
+{
+    switch (printf("Hello World"))//if(printf("Hello World"))
+    {
+
+    }
+}
+/*---------------------------------
+Aşağıdaki örnekte sınıf nesnelerinin
+ init edilmesine farklı init tipleri
+ olduğu gösterilmiştir.
+----------------------------------*/
+#include <iostream>
+
+class Myclass
+{
+public:
+    Myclass()
+    {
+        std::cout << "Myclass default ctor" << '\n';
+    }
+    Myclass(int)
+    {
+        std::cout << "Myclass (int) ctor" << '\n';
+    }
+    Myclass(double)
+    {
+        std::cout << "Myclass (double) ctor" << '\n';
+    }
+    ~Myclass()
+    {
+        std::cout << "Myclass dtor" << '\n';
+    }
+};
+
+int main()
+{
+    Myclass m1(5); //direct init
+    Myclass m2 = 7.6; //copy init
+    Myclass m3; //default init
+    Myclass m4{9.7};//direct list init
+}
+/*-----------------------------------------------
+Student sınıfı
+----------------------------------------------*/
+#include <iostream>
+
+class Student
+{
+public:
+    Student() : m_name{""}, m_ID{0}{}
+    Student(const char* name,int ID) : m_name{name},m_ID{ID}{}
+private:
+    const char* m_name;
+    int m_ID;
+};
+
+int main()
+{
+    Student Mustafa("Mustafa",1921101);
+}
+/*---------------------------------
+Aşağıdaki örnekte bir undefined behaviour
+ söz konusudur. Bunun nedeni sınıf
+ içerisinde ilk bildirilen değişkenin
+ mx olmasından dolayı my'nin değerinin
+ bir çöp değer olmasıdır.
+----------------------------------*/
+#include <iostream>
+
+class Myclass{
+public:
+    Myclass(): my(5.),mx(my / 3){}
+    double mx,my;
+};
+
+int main()
+{
+    Myclass m;
+    std::cout << "m.mx : " << m.mx << "\nm.my : " << m.my << '\n';
+}
+
+/*---------------------------------
+const fonksiyonlar ancak sınıfların üye fonksiyonları
+ olabilir. Ayrıca bu fonksiyonların non-statik
+ olması şarttır. Point sınıfı ve test kodu
+----------------------------------*/
+#include <iostream>
+
+class point
+{
+public:
+    point() : mx{0}, my{0}{}
+    point(int x,int y) : mx{x},my{y}{}
+    void setMx(int x)
+    {
+        mx = x;
+    }
+    int getMx() const
+    {
+        return mx;
+    }
+    void setMy(int y)
+    {
+        my = y;
+    }
+    int getMy()const
+    {
+        return my;
+    }
+private:
+    int mx,my;
+};
+
+
+int main()
+{
+    point p1;
+    p1.setMx(10);
+    p1.setMy(5);
+    std::cout << "mx : " << p1.getMx() << "\nmy : "  << p1.getMy() << '\n';
+}
+
+/*---------------------------------
+const bir üye fonksiyon non const üye
+ fonksiyonu çağıramaz. Bu doğrudan
+ sentaks hatasıdır.
+----------------------------------*/
+#include <iostream>
+
+
+class Myclass
+{
+public:
+    void foo()const;
+    void func();
+private:
+    int mx;
+};
+
+void Myclass::foo() const
+{
+    Myclass::func();//error
+    func();//error
+}
+
+
+int main()
+{
+
+}
+
+/*---------------------------------
+Ancak tersi durumda non-const bir üye
+ fonksiyon const bir üye fonksiyonu çağırabilir.
+----------------------------------*/
+#include <iostream>
+
+
+class Myclass
+{
+public:
+    void foo()const;
+    void func();
+private:
+    int mx;
+};
+
+void Myclass::func()
+{
+    foo();
+}
+
+void Myclass::foo() const
+{
+    std::cout << "Myclass foo" << '\n';
+}
+
+
+int main()
+{
+
+}
+/*---------------------------------
+const üye fonksiyonlar birbirlerini
+ çağırabilir.
+----------------------------------*/
+#include <iostream>
+
+class Myclass
+{
+public:
+    void foo()const;
+    void func()const;
+private:
+    int mx;
+};
+
+void Myclass::foo() const
+{
+    func();
+}
+
+void Myclass::func() const
+{
+    foo();
+}
+
+
+int main()
+{
+
+}
+/*---------------------------------
+const sınıf nesneleriyle ancak const
+ üye fonksiyonlar çağrılabilir. non-const
+ üye fonksiyonların çağrılması sentaks
+ hatasına sebep olur.
+----------------------------------*/
+#include <iostream>
+
+class Myclass
+{
+public:
+    void accessor()const;
+    void setter();
+private:
+    int mx;
+};
+
+
+int main()
+{
+    const Myclass m1{};
+    m1.accessor();
+    m1.setter();//error
+}
+#include <iostream>
+
+class Student
+{
+public:
+    Student(const char* name,int id): m_name{const_cast<char*>(name)}, m_id{id}{}
+    const char* getName()const
+    {
+        return m_name;
+    }
+    void setName(const char* name)
+    {
+        m_name = const_cast<char*>(name);
+    }
+    int getId()const
+    {
+        return m_id;
+    }
+    void setId(int id)
+    {
+        m_id = id;
+    }
+private:
+    char* m_name;
+    int m_id;
+};
+
+
+int main()
+{
+    Student student{"Elif",188911};
+    std::cout << "Name : " << student.getName() << "\nId : " << student.getId() << '\n';
+    student.setName("Murat");
+    student.setId(230329);
+    std::cout << "Name : " << student.getName() << "\nId : " << student.getId() << '\n';
+}
+/*---------------------------------
+Nesne yaratım aşamaları:
+ 1-) Bellek alanı ayrılır.(en az non statik
+ veri elemanlarının uzunluğu)
+ 2-) Constructor çağrılır.
+ Burada B'nin ctoru çağrılmadan önce
+ bellete yer ayrıldığı için A türünden
+ sınıf nesnesinin ctorunun B ctorundan
+ önce çağrılması gerekir. Bu durumda
+ A ctor yazısından sonra B ctor yazısı
+ ekrana bastırılır. Önce ctoru çağrılanın
+ her zaman dtor'u en son çağrılır.
+----------------------------------*/
+#include <iostream>
+
+class A{
+public:
+    A()
+    {
+        std::cout << "A ctor" << '\n';
+    }
+    ~A()
+    {
+        std::cout << "A dtor" << '\n';
+    }
+};
+
+
+class B
+{
+public:
+    B()
+    {
+        std::cout << "B ctor" << '\n';
+    }
+    ~B()
+    {
+        std::cout << "B dtor" << '\n';
+    }
+private:
+    A ax;
+};
+
+int main()
+{
+    B bx;
+}
+
+
+/*---------------------------------
+Özel Üye fonksiyonlar(special Member Functions):
+ 1-)Default Ctor
+ 2-)Copy Ctor
+ 3-)Move Ctor
+ 4-)Copy Assignment
+ 5-)Move Assignment
+ 6-)Dtor
+----------------------------------*/
+#include <iostream>
+
+class Myclass
+{
+public:
+    //Myclass() = delete;
+private:
+    const int mx;
+};
+
+
+int main()
+{
+    Myclass m;
+}
+/*---------------------------------
+Eğer derleyici sınıfın bir üye fonksiyonunu
+ default ederlken herhangi bir geçersiz bir durum
+ oluşursa derleyici sentaks hatası vermez ancak
+ default olarak yazması gerekn özel üye fonksiyonu
+ delete eder.
+
+ Aşağıdaki örnekte sentaks hatasının
+ nedeni const bir ilk değer verilmemesi
+ değil default ctorun delete edilmesinden
+ kaynaklanmaktadır.
+----------------------------------*/
+#include <iostream>
+
+class Myclass
+{
+public:
+    //Myclass() = delete;
+private:
+    const int mx;
+};
+
+
+int main()
+{
+    Myclass m;
+}
+/*---------------------------------
+ Aşağıdaki örnekte B sınıfının ctoru
+ delete edilmiştir. Bunun nedeni A sınıfında
+ default ctorun olmayışıdır.
+----------------------------------*/
+#include <iostream>
+
+class A{
+private:
+    A(int);
+};
+
+class B{
+public:
+    B() = default;
+private:
+    A ax;
+};
+
+int main()
+{
+    B bx;//error
+}
+/*---------------------------------
+ Aşağıdaki örnekte copy ctor çağrılacak.
+----------------------------------*/
+#include <iostream>
+
+class Myclass{
+public:
+    Myclass()
+    {
+        std::cout << "Myclass default ctor\n";
+    }
+    Myclass(const Myclass&)
+    {
+        std::cout << "Myclass Copy ctor\n";
+    }
+};
+
+
+int main()
+{
+    Myclass m1;
+    Myclass m2 = m1; //copy constructor çağrılacak.
+}
+/*---------------------------------
+ Aşağıdaki örnekte copy ctor çağrılacak.
+----------------------------------*/
+#include <iostream>
+
+class Myclass{
+public:
+    Myclass()
+    {
+        std::cout << "Myclass default ctor\n";
+    }
+    Myclass(const Myclass&)
+    {
+        std::cout << "Myclass Copy ctor\n";
+    }
+    Myclass(Myclass&&)
+    {
+        std::cout << "Myclass move ctor\n";
+    }
+    Myclass& operator=(const Myclass&)
+    {
+        std::cout << "Myclass Copy Assignment\n";
+    }
+    Myclass& operator=(Myclass&&)
+    {
+        std::cout << "Myclass move Assignment\n";
+    }
+};
+
+
+int main()
+{
+    Myclass m1;
+    Myclass m2 = std::move(m1); //move ctor çağrılacak.
+    Myclass m3;
+    m3 = m1; //copy assignment çağrılacak.
+    Myclass m4;
+    m4 = std::move(m3); //move assignment çağrılacak.
+}
+
+
